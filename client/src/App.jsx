@@ -1,8 +1,17 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { About, Home, Profile, Signin, Signout } from './Pages';
+
 function App() {
   return (
-    <div>
-      <h1 className='bg-red-500'>App</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/sign-in' element={<Signin />} />
+        <Route path='/sign-out' element={<Signout />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/about' element={<About />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
