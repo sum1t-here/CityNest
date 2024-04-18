@@ -6,11 +6,11 @@ import bcrypt from 'bcryptjs';
  * @ROUTE @POST {{url}}/api/auth
  * @access PUBLIC
  */
-export const signUp = async (res, req, next) => {
+export const signUp = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.send(400).json({
+    return res.status(400).json({
       message: 'All fields are necessary',
     });
   }
