@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { About, Home, Profile, Signin, Signout, Signup } from './Pages';
 import { Header, PrivateRoute } from './Components';
+import CreateListing from './Pages/CreateListing';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/sign-out' element={<Signout />} />
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/create-listing' element={<CreateListing />} />
         </Route>
         <Route path='/about' element={<About />} />
       </Routes>
