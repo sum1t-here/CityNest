@@ -1,4 +1,4 @@
-import { errorHandler } from './error.utils';
+import { errorHandler } from './error.utils.js';
 import jwt from 'jsonwebtoken';
 
 export const validUser = (req, res, next) => {
