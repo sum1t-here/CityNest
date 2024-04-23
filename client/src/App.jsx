@@ -1,7 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { About, Home, Profile, Signin, Signout, Signup } from './Pages';
+import {
+  About,
+  CreateListing,
+  Home,
+  Profile,
+  Signin,
+  Signout,
+  Signup,
+} from './Pages';
 import { Header, PrivateRoute } from './Components';
-import CreateListing from './Pages/CreateListing';
 
 function App() {
   return (
