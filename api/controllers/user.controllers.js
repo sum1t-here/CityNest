@@ -52,7 +52,7 @@ export const deleteUser = async (req, res, next) => {
 export const getUserListing = async (req, res, next) => {
   if (req.user.id === req.params.id) {
     try {
-      const listing = await Listing.find({ useRef: req.params.id });
+      const listing = await Listing.find({ userRef: req.params.id });
       res.status(200).json(listing);
     } catch (error) {
       next(error);
