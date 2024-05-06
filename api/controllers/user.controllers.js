@@ -3,11 +3,11 @@ import User from '../models/user.models.js';
 import { errorHandler } from './../utils/error.utils.js ';
 import Listing from '../models/listing.models.js';
 
-export const test = (req, res) => {
-  res.json({
-    message: 'Hello world',
-  });
-};
+// export const test = (req, res) => {
+//   res.json({
+//     message: 'Hello world',
+//   });
+// };
 
 export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id)
@@ -15,7 +15,7 @@ export const updateUser = async (req, res, next) => {
 
   try {
     if (req.body.password) {
-      req.body.password = bcryptjs.hashSync(req.body.password, 100);
+      req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -32,6 +32,8 @@ export const updateUser = async (req, res, next) => {
     );
 
     const { password, ...rest } = updatedUser._doc;
+
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }
