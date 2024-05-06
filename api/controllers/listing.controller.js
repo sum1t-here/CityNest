@@ -15,7 +15,7 @@ export const createListing = async (req, res, next) => {
 };
 
 export const deleteListing = async (req, res, next) => {
-  const listing = await Listing.find(req.params.id);
+  const listing = await Listing.findById(req.params.id);
 
   if (!listing) {
     return next(errorHandler(404, 'Listing not found'));
@@ -26,14 +26,15 @@ export const deleteListing = async (req, res, next) => {
   }
 
   try {
-    await listing.findByIdAndDelete(req.params.id);
+    await Listing.findByIdAndDelete(req.params.id);
+    res.status(200).json('Listing has been deleted');
   } catch (error) {
     next(error);
   }
 };
 
 export const updateListing = async (req, res, next) => {
-  const listing = await Listing.find(req.params.id);
+  const listing = await Listing.findById(req.params.id);
 
   if (!listing) {
     return next(errorHandler(404, 'Listing not found'));
@@ -48,7 +49,7 @@ export const updateListing = async (req, res, next) => {
       req.body,
       { new: true }
     );
-    res.status(200).json(updateListing);
+    res.status(200).json(updatedListing);
   } catch (error) {
     next(error);
   }
