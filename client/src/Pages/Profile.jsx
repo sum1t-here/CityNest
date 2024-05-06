@@ -248,7 +248,7 @@ function Profile() {
           <h1 className='text-center mt-7 text-2xl font-semibold'>
             Your Listing
           </h1>
-          {userListing.map((listing) => {
+          {userListing.map((listing) => (
             <div
               key={listing._id}
               className='border rounded-lg p-3 flex justify-between items-center gap-4'
@@ -277,8 +277,8 @@ function Profile() {
                   <button className='text-green-700 uppercase'>Edit</button>
                 </Link>
               </div>
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
       )}
     </div>

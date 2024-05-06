@@ -3,6 +3,7 @@ import {
   About,
   CreateListing,
   Home,
+  Listing,
   Profile,
   Signin,
   Signout,
@@ -20,6 +21,8 @@ function App() {
         <Route path='/sign-up' element={<Signup />} />
         <Route path='/sign-in' element={<Signin />} />
         <Route path='/sign-out' element={<Signout />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/listing/:listingId' element={<Listing />} />
         <Route element={<PrivateRoute />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/create-listing' element={<CreateListing />} />
@@ -28,7 +31,6 @@ function App() {
             element={<UpdateListing />}
           />
         </Route>
-        <Route path='/about' element={<About />} />
       </Routes>
     </BrowserRouter>
   );

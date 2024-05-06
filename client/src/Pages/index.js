@@ -6,6 +6,7 @@ import Profile from './Profile';
 import Signup from './Signup';
 import CreateListing from './CreateListing';
 import UpdateListing from './UpdateListing';
+import Listing from './Listing';
 
 export {
   About,
@@ -16,4 +17,5 @@ export {
   Profile,
   CreateListing,
   UpdateListing,
+  Listing,
 };
