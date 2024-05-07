@@ -43,6 +43,7 @@ function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
+
   return (
     <main>
       {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
@@ -83,10 +84,12 @@ function Listing() {
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing.name} - ${' '}
+              {listing.name} - ₹{' '}
               {listing.offer
-                ? listing.discountPrice.toLocaleString('en-US')
-                : listing.regularPrice.toLocaleString('en-US')}
+                ? listing.discountPrice &&
+                  listing.discountPrice.toLocaleString('en-US')
+                : listing.regularPrice &&
+                  listing.regularPrice.toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
             <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
@@ -97,9 +100,11 @@ function Listing() {
               <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
               </p>
-              {listing.offer && (
+              {listing.offer && listing.discountPrice !== undefined && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ₹{+listing.regularPrice - +listing.discountPrice} OFF
+                  ₹
+                  {(+listing.regularPrice ?? 0) - (+listing.discountPrice ?? 0)}
+                  OFF
                 </p>
               )}
             </div>
