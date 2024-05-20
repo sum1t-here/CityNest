@@ -44,6 +44,19 @@ function Listing() {
     fetchListing();
   }, [params.listingId]);
 
+  const calculateDiscount = (regularPrice, discountPrice) => {
+    const regPrice = Number(regularPrice);
+    const discPrice = Number(discountPrice);
+    return regPrice && discPrice ? regPrice - discPrice : 0;
+  };
+
+  const regularPrice = listing?.regularPrice ? Number(listing.regularPrice) : 0;
+
+  const discountPrice = listing?.discountedPrice
+    ? Number(listing.discountedPrice)
+    : 0;
+  const discountedAmount = calculateDiscount(regularPrice, discountPrice);
+
   return (
     <main>
       {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
@@ -83,15 +96,27 @@ function Listing() {
             </p>
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
-            <p className='text-2xl font-semibold'>
-              {listing.name} - ₹{' '}
-              {listing.offer
-                ? listing.discountPrice &&
-                  listing.discountPrice.toLocaleString('en-US')
-                : listing.regularPrice &&
-                  listing.regularPrice.toLocaleString('en-US')}
-              {listing.type === 'rent' && ' / month'}
-            </p>
+            <div>
+              <p className='text-2xl font-semibold'>
+                {listing.name} - ₹{' '}
+                {listing.offer ? (
+                  <>
+                    <span className='line-through text-gray-500'>
+                      {listing.regularPrice}
+                    </span>{' '}
+                    {listing.discountedPrice > 0 &&
+                      discountedAmount.toLocaleString('en-US')}
+                  </>
+                ) : (
+                  <>
+                    {listing.regularPrice &&
+                      listing.regularPrice.toLocaleString('en-US')}
+                  </>
+                )}
+                {listing.type === 'rent' && ' / month'}
+              </p>
+            </div>
+
             <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
               <FaMapMarkerAlt className='text-green-700' />
               {listing.address}
@@ -100,13 +125,13 @@ function Listing() {
               <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
               </p>
-              {listing.offer && listing.discountPrice !== undefined && (
-                <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ₹
-                  {(+listing.regularPrice ?? 0) - (+listing.discountPrice ?? 0)}
-                  OFF
-                </p>
-              )}
+              {listing.offer &&
+                listing.discountedPrice !== undefined &&
+                listing.discountedPrice > 0 && (
+                  <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                    ₹{listing.discountedPrice.toLocaleString('en-US')} OFF
+                  </p>
+                )}
             </div>
             <p className='text-slate-800'>
               <span className='font-semibold text-black'>Description - </span>
@@ -134,14 +159,17 @@ function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                onClick={() => setContact(true)}
-                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
-              >
-                Contact landlord
-              </button>
-            )}
+
+            {currentUser &&
+              listing?.userRef !== currentUser._id &&
+              !contact && (
+                <button
+                  onClick={() => setContact(true)}
+                  className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                >
+                  Contact landlord
+                </button>
+              )}
             {contact && <Contact listing={listing} />}
           </div>
         </div>

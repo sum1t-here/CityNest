@@ -308,6 +308,7 @@ function UpdateListing() {
                   max='10000'
                   className='p-3 border border-gray-300 rounded-lg w-24'
                   required
+                  onChange={handleChange}
                   value={formData.discountedPrice}
                 />
                 <div className='flex flex-col items-center'>

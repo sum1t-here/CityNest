@@ -139,12 +139,16 @@ function CreateListing() {
       });
 
       const data = await res.json();
-      console.log(data);
+
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
+      } else {
+        const newListingId = data.listing._id;
+        console.log(data);
+        console.log(newListingId);
+        navigate(`/listing/${newListingId}`);
       }
-      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -257,7 +261,7 @@ function CreateListing() {
             <div className='flex items-center gap-2'>
               <input
                 type='number'
-                id='bathroom'
+                id='bathrooms'
                 min='1'
                 max='10'
                 className='p-3 border border-gray-300 rounded-lg'
@@ -292,6 +296,7 @@ function CreateListing() {
                   max='10000'
                   className='p-3 border border-gray-300 rounded-lg w-24'
                   required
+                  onChange={handleChange}
                   value={formData.discountedPrice}
                 />
                 <div className='flex flex-col items-center'>
